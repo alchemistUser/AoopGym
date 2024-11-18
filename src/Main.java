@@ -84,7 +84,9 @@ public class Main {
     static void btnSaveMCPressed(){
         StringBuilder sb = new StringBuilder();
         if(Integer.parseInt(tfDayMC.getText())<10){
+            if(!tfDayMC.getText().substring(0, 1).equals("0")){
             sb.append("0");
+            }
         }
         sb.append(tfDayMC.getText());
         switch(cbMonthsMC.getSelectedIndex()){
