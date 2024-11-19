@@ -118,17 +118,17 @@ public class RegisterFrame extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        Main.btnNextRFPressed();
+        Main.btnRFNextPressed();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        Main.btnBackRFPressed();
+        Main.btnRFBackPressed();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        Main.btnBackToLoginRFPressed();
+        Main.btnRFBackToLoginPressed();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
