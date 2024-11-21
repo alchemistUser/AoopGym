@@ -23,7 +23,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import javax.swing.JPasswordField;
 
 public class Main {
@@ -45,7 +44,7 @@ public class Main {
         dobRefresher();
         BMIKeyPressed();
     }
-    static void btnRFRegisterPressed(){
+    static void btnSFRegisterPressed(){
         pnlRFContainer.setLayout(new BorderLayout());
         pnlRFContainer.add(pnlRegisterPage1);
         frmStartFrame.dispose();
@@ -56,6 +55,7 @@ public class Main {
         btnRFBackPressed();
         frmRegisterFrame.dispose();
         frmStartFrame.setVisible(true);
+        refreshRegisterFrame();
     }
     static void btnRFNextPressed(){
         // conditions
@@ -357,6 +357,7 @@ public class Main {
             return;
         }
         insertUser(lblRP2UserID.getText(), password, username, tfRP1Name.getText(), dob, tfRP1Height.getText(), tfRP1Weight.getText(), lblRP1BMI.getText());
+        btnRFBackToLoginPressed();
     }
         
     // Login
@@ -371,43 +372,43 @@ public class Main {
         }
         System.out.println(String.valueOf(loginAuth(tfSFUser.getText(), tfSFPassword.getText())));
     }
-static int loginAuth(String userInput, String password) {
-    String queryUser = "SELECT userID, username, password FROM useraccounts WHERE userID = ? OR username = ?";
-    try (Connection conn = getConnection();
-         PreparedStatement pstmt = conn.prepareStatement(queryUser)) {
+    static int loginAuth(String userInput, String password) {
+        String queryUser = "SELECT userID, username, password FROM useraccounts WHERE userID = ? OR username = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(queryUser)) {
 
-        // Check if userInput is numeric (possible userID) or text (username)
-        try {
-            pstmt.setInt(1, Integer.parseInt(userInput)); // If numeric, set as userID
-        } catch (NumberFormatException e) {
-            pstmt.setString(1, ""); // Empty string to avoid mismatch if userInput is not a number
-        }
-
-        pstmt.setString(2, userInput); // Always set as username for the second parameter
-
-        // Execute query
-        ResultSet rs = pstmt.executeQuery();
-
-        if (rs.next()) {
-            // Check if the provided password matches
-            String storedPassword = rs.getString("password");
-            if (storedPassword.equals(password)) {
-                System.out.println("Login successful for user: " + rs.getString("username"));
-                return 0; // Success
-            } else {
-                System.out.println("Incorrect password.");
-                return 1; // Incorrect password
+            // Check if userInput is numeric (possible userID) or text (username)
+            try {
+                pstmt.setInt(1, Integer.parseInt(userInput)); // If numeric, set as userID
+            } catch (NumberFormatException e) {
+                pstmt.setString(1, ""); // Empty string to avoid mismatch if userInput is not a number
             }
-        } else {
-            System.out.println("No userID or username found.");
-            return 2; // No userID or username found
-        }
 
-    } catch (SQLException e) {
-        System.err.println("Database error: " + e.getMessage());
-        return -1; // -1 indicates a system error
+            pstmt.setString(2, userInput); // Always set as username for the second parameter
+
+            // Execute query
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                // Check if the provided password matches
+                String storedPassword = rs.getString("password");
+                if (storedPassword.equals(password)) {
+                    System.out.println("Login successful for user: " + rs.getString("username"));
+                    return 0; // Success
+                } else {
+                    System.out.println("Incorrect password.");
+                    return 1; // Incorrect password
+                }
+            } else {
+                System.out.println("No userID or username found.");
+                return 2; // No userID or username found
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Database error: " + e.getMessage());
+            return -1; // -1 indicates a system error
+        }
     }
-}
 
 
     //variables
